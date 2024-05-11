@@ -1,20 +1,26 @@
 # API
 
-## `GET: /rooms`
+## `GET: /rooms?:limit&:offset`
 
 Returns a list of existing hotel rooms.
+
+Request Params:
+
+- limit: max number of rooms viewable per page
+- offset: number of rooms already viewed
 
 Response:
 
 ```
 {
+    "total": 40,
     "limit": 10,
     "offset": 5,
     "rooms": [
         {
             "id": 1,
-            "title": "Standard Doppelzimmer",
-            "description": "Großes helles Zimmer mit wetseitigem Balkon...",
+            "name": "Standard Doppelzimmer",
+            "description": "Großes helles Zimmer mit westseitigem Balkon...",
             "characteristics": [
                 {
                     "id": 1,
@@ -56,8 +62,8 @@ Response:
 ```
 {
     "id": 1,
-    "title": "Standard Doppelzimmer",
-    "description": "Großes helles Zimmer mit wetseitigem Balkon...",
+    "name": "Standard Doppelzimmer",
+    "description": "Großes helles Zimmer mit westseitigem Balkon...",
     "characteristics": [
         {
             "id": 1,
@@ -129,8 +135,8 @@ Response:
     "room":
         {
             "id": 1,
-            "title": "Standard Doppelzimmer",
-            "description": "Großes helles Zimmer mit wetseitigem Balkon...",
+            "name": "Standard Doppelzimmer",
+            "description": "Großes helles Zimmer mit westseitigem Balkon...",
             "characteristics": [
                 {
                     "id": 1,
