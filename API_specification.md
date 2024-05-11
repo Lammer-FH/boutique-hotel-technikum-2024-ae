@@ -1,5 +1,15 @@
 # API
 
+## General
+
+Response (4xx, 5xx):
+
+```
+{
+    "message": <Detailed Error message>
+}
+```
+
 ## `GET: /rooms?:limit&:offset`
 
 Returns a list of existing hotel rooms.
@@ -9,7 +19,7 @@ Request Params:
 - limit: max number of rooms viewable per page
 - offset: number of rooms already viewed
 
-Response:
+Response (200):
 
 ```
 {
@@ -57,7 +67,7 @@ Request Params:
 
 - id: identifier of the specific room
 
-Response:
+Response (200):
 
 ```
 {
@@ -99,7 +109,7 @@ Request Params:
 - startDate: Checkin date in the format: YYYY-MM-DD
 - endDate: Checkout date in the format: YYYY-MM-DD
 
-Response:
+Response (200):
 
 ```
 {
@@ -125,7 +135,7 @@ Request:
 }
 ```
 
-Response:
+Response (200):
 
 ```
 {
