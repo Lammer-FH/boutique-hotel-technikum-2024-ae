@@ -29,10 +29,10 @@
 ## RoomToCharacteristics
 > Assignment of specific charateristics to a room
 
-| Column           | Type | Nullable | Default | Description                         | 
-|------------------|------|----------|---------|-------------------------------------|
-| RoomId           | Int  | no       | null    | FK Rooms.RoomId                     |
-| CharacteristicId | Int  | no       | null    | FK Characteristics.CharacteristicId |
+| Column           | Type | Nullable | Default | Description                             | 
+|------------------|------|----------|---------|-----------------------------------------|
+| RoomId           | Int  | no       | null    | PK1 FK Rooms.RoomId                     |
+| CharacteristicId | Int  | no       |         | PK2 FK Characteristics.CharacteristicId |
 
 ## Guests
 > A guest
