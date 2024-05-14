@@ -15,7 +15,7 @@
 | Column      | Type         | Null | Default       | Description                          | 
 |-------------|--------------|------|---------------|--------------------------------------|
 | RoomImageId | Int          | no   | autoincrement | PK                                   |
-| RoomId      | Int          | no   | null          | FK Rooms.RoomId                      |
+| RoomId      | Int          | no   |               | FK Rooms.RoomId                      |
 | ImagePath   | VarChar(265) | no   | ""            | path to the image on the file system |
 
 ## Characteristics
@@ -24,7 +24,7 @@
 | Column           | Type        | Null | Default       | Description | 
 |------------------|-------------|------|---------------|-------------|
 | CharacteristicId | Int         | no   | autoincrement | PK          |
-| Name             | VarChar(64) | yes  | null          |             |
+| Name             | VarChar(64) | no   | ""            | Unique      |
 
 ## RoomToCharacteristics
 > Assignment of specific charateristics to a room
@@ -34,7 +34,7 @@
 | RoomId           | Int  | no       | null    | FK Rooms.RoomId                     |
 | CharacteristicId | Int  | no       | null    | FK Characteristics.CharacteristicId |
 
-## Guest
+## Guests
 > A guest
 
 | Column       | Type         | Nullable | Default       | Description                      | 
@@ -50,7 +50,7 @@
 | Column        | Type        | Nullable | Default       | Description                                                 | 
 |---------------|-------------|----------|---------------|-------------------------------------------------------------|
 | BookingId     | Int         | no       | autoincrement | PK                                                          |
-| GuestId       | Int         | no       |               |                                                             |
+| GuestId       | Int         | no       |               | FK Guests.GuestId                                           |
 | BookingNumber | VarChar(64) | no       |               | UniqueKey, number of a booking for communication with guest |
 | StartDate     | Date        | no       |               | start of booking                                            |
 | EndDate       | Date        | no       |               | end of booking (constraint must be after StartDate)         |
@@ -59,7 +59,7 @@
 ## BookingToRooms
 > Assignment of a booking to the booked rooms
 
-| Column    | Type | Nullable | Default | Description           | 
-|-----------|------|----------|---------|-----------------------|
-| BookingId | Int  | no       |         | FK Bookings.BookingId |
-| RoomId    | Int  | no       |         | FK Rooms.RoomId       |
+| Column    | Type | Nullable | Default | Description               | 
+|-----------|------|----------|---------|---------------------------|
+| BookingId | Int  | no       |         | PK1 FK Bookings.BookingId |
+| RoomId    | Int  | no       |         | PK2 FK Rooms.RoomId       |
