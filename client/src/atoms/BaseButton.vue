@@ -1,26 +1,20 @@
 <template>
-  <button class="btn">{{ text }}</button>
+  <ion-button>{{ text }}</ion-button>
 </template>
 
 <script>
-export default {
-  name: 'BaseButton',
+import { defineComponent } from 'vue';
+import { IonButton } from '@ionic/vue';
+
+export default defineComponent({
+  components: {
+    IonButton
+  },
   props: {
     text: {
       type: String,
-      required: true,
-    },
-  },
-};
+      required: true
+    }
+  }
+});
 </script>
-
-<style scoped>
-.btn {
-  background-color: #007bff;
-  color: white;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-</style>
