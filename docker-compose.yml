@@ -1,0 +1,11 @@
+version: '1'
+
+services:
+  boutique-hotel-technikum-db:
+    container_name: boutique-hotel-technikum-db
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: boutique-hotel-technikum-db
+    ports:
+      - "3306:3306"

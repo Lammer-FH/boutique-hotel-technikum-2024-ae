@@ -18,32 +18,38 @@ docker-compose up
 
 This should create a mysql docker conatiner and start it.
 
+### Client
+
+Install dependencies in the `client/` directory:
+
+```
+npm install
+```
+
+## Execution
+
+### Server
+
 #### Start server
 
 Until now the server needs to be started via an IDE. The easiest way is by starting IntelliJ, open the project `boutique-hotel-technikum` in the `server/` directory and run `BoutiqueHotelTechnikumApplication`. The server should then be up and running.
 
 ### Client
 
-#### Project setup
-
-Navigate to the client directory:
-
-```
-cd client
-npm install
-```
-
 #### Compiles and hot-reloads for development
+
 ```
 npm run serve
 ```
 
 #### Compiles and minifies for production
+
 ```
 npm run build
 ```
 
 #### Lints and fixes files
+
 ```
 npm run lint
 ```
