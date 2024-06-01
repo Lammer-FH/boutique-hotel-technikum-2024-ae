@@ -67,40 +67,9 @@ paths:
           example: 5
           schema:
             type: integer
-      responses:
-        '200':
-          description: Room details
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Room'
-        401:
-          description: Client Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        500:
-          description: Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
-  /rooms/{id}/availability:
-    get:
-      summary: Checks if a room is available for a given date range.
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: Identifier of the specific room
-          example: 5
-          schema:
-            type: integer
         - name: startDate
           in: query
-          required: true
+          required: false
           description: Checkin date in the format YYYY-MM-DD
           example: 2024-06-01
           schema:
@@ -108,23 +77,21 @@ paths:
             format: date
         - name: endDate
           in: query
-          required: true
+          required: false
           description: Checkout date in the format YYYY-MM-DD
           example: 2024-06-07
           schema:
             type: string
             format: date
       responses:
-        200:
-          description: Availability of the room
+        '200':
+          description: Room details
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  available:
-                    type: boolean
-                    example: true
+                $ref: '#/components/schemas/Room'
+        404:
+          description: Room not available with queried parameters
         401:
           description: Client Error
           content:
@@ -148,7 +115,7 @@ paths:
             schema:
               type: object
               properties:
-                id:
+                roomId:
                   type: integer
                   example: 1
                 startDate:
