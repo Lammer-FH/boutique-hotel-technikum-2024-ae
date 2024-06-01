@@ -24,6 +24,22 @@ paths:
           example: 5
           schema:
             type: integer
+        - name: startDate
+          in: query
+          required: false
+          description: Checkin date in the format YYYY-MM-DD
+          example: 2024-06-01
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: false
+          description: Checkout date in the format YYYY-MM-DD
+          example: 2024-06-07
+          schema:
+            type: string
+            format: date
       responses:
         '200':
           description: A list of rooms
@@ -107,7 +123,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /booking:
+  /bookings:
     post:
       summary: Books a room for a specified date range for a specific customer.
       requestBody:
