@@ -3,6 +3,8 @@ info:
   title: Hotel Booking API
   version: 1.0.0
   description: API for booking hotel rooms and checking availability.
+servers:
+  - url: https://api.example.com/api/v1
 paths:
   /rooms:
     get:
