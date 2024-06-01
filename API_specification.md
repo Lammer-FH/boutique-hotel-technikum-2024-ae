@@ -135,7 +135,7 @@ Request:
 }
 ```
 
-Response (200):
+Response (201):
 
 ```
 {
