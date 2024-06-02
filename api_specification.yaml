@@ -41,7 +41,7 @@ paths:
             type: string
             format: date
       responses:
-        '200':
+        200:
           description: A list of rooms
           content:
             application/json:
@@ -67,6 +67,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: no rooms available with queried parameters
         500:
           description: Server Error
           content:
@@ -102,7 +104,7 @@ paths:
             type: string
             format: date
       responses:
-        '200':
+        200:
           description: Room details
           content:
             application/json:
