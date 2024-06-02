@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="HotelApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="server" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.boutiquehoteltechnikum.BoutiqueHotelTechnikumApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
