@@ -1,0 +1,252 @@
+openapi: 3.0.3
+info:
+  title: Hotel Booking API
+  version: 1.0.0
+  description: API for booking hotel rooms and checking availability.
+servers:
+  - url: https://api.example.com/api/v1
+paths:
+  /rooms:
+    get:
+      summary: Returns a list of existing hotel rooms.
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          description: max number of rooms viewable per page
+          example: 10
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          required: false
+          description: number of rooms already viewed
+          example: 5
+          schema:
+            type: integer
+        - name: startDate
+          in: query
+          required: false
+          description: Checkin date in the format YYYY-MM-DD
+          example: 2024-06-01
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: false
+          description: Checkout date in the format YYYY-MM-DD
+          example: 2024-06-07
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: A list of rooms
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 40
+                  limit:
+                    type: integer
+                    example: 10
+                  offset:
+                    type: integer
+                    example: 5
+                  rooms:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Room'
+        401:
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: no rooms available with queried parameters
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /rooms/{id}:
+    get:
+      summary: Returns details of a specific room.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Identifier of the specific room
+          example: 5
+          schema:
+            type: integer
+        - name: startDate
+          in: query
+          required: false
+          description: Checkin date in the format YYYY-MM-DD
+          example: 2024-06-01
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: false
+          description: Checkout date in the format YYYY-MM-DD
+          example: 2024-06-07
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          description: Room details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+        404:
+          description: Room not available with queried parameters
+        401:
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /bookings:
+    post:
+      summary: Books a room for a specified date range for a specific customer.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roomId:
+                  type: integer
+                  example: 1
+                startDate:
+                  type: string
+                  format: date
+                  description: format YYYY-MM-DD
+                  example: 2024-06-01
+                endDate:
+                  type: string
+                  format: date
+                  description: format YYYY-MM-DD
+                  example: 2024-06-07
+                firstName:
+                  type: string
+                  example: "John"
+                lastName:
+                  type: string
+                  example: "Doe"
+                email:
+                  type: string
+                  format: email
+                  example: "john@doe.com"
+                breakfast:
+                  type: boolean
+                  example: true
+      responses:
+        201:
+          description: Booking confirmation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bookingNumber:
+                    type: string
+                    example: "23438232"
+                  startDate:
+                    type: string
+                    format: date
+                    example: "YYYY-MM-DD"
+                  endDate:
+                    type: string
+                    format: date
+                    example: "YYYY-MM-DD"
+                  room:
+                    $ref: '#/components/schemas/Room'
+                  firstName:
+                    type: string
+                    example: "John"
+                  lastName:
+                    type: string
+                    example: "Doe"
+                  email:
+                    type: string
+                    format: email
+                    example: "john@doe.com"
+                  breakfast:
+                    type: boolean
+                    example: true
+        401:
+          description: Client Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    Room:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Standard Doppelzimmer"
+        description:
+          type: string
+          example: "Großes helles Zimmer mit westseitigem Balkon..."
+        characteristics:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: "TV"
+        images:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: "fse4s45r5s44r3d.jpg"
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Detailed Error message"
