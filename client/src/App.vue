@@ -1,35 +1,60 @@
 <template>
-  <div id="app">
-    <ion-app>
-      <ion-router-outlet></ion-router-outlet>
-      <ion-footer>
+  <ion-app>
+    <HotelMenu/> 
+    <ion-page id="main-content">
+      <ion-header>
         <ion-toolbar>
-          <ion-buttons>
-            <ion-button :router-link="{ name: 'Home' }">Home</ion-button>
-            <ion-button :router-link="{ name: 'Impressum' }">Impressum</ion-button>
-            <ion-button :router-link="{ name: 'About' }">About</ion-button>
+          <ion-title>{{routeName}}</ion-title>
+          <ion-buttons slot="end">
+            <ion-menu-button></ion-menu-button>
           </ion-buttons>
         </ion-toolbar>
-      </ion-footer>
-    </ion-app>
-  </div>
+      </ion-header>
+      <ion-content>
+        <ion-router-outlet/>
+      </ion-content>
+      <HotelFooter/>
+    </ion-page>
+  </ion-app>
 </template>
 
 <script>
-import { IonApp, IonRouterOutlet, IonFooter, IonToolbar, IonButtons, IonButton } from '@ionic/vue';
+import { IonApp, IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuButton, 
+         IonRouterOutlet, } from '@ionic/vue';
+import { bedOutline, personCircleOutline } from 'ionicons/icons';
+import { HotelMenu, HotelFooter } from './organisms'
 
 export default {
   name: 'App',
   components: {
-    IonApp,
-    IonRouterOutlet,
-    IonFooter,
-    IonToolbar,
-    IonButtons,
-    IonButton,
+    IonApp, IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuButton, IonRouterOutlet, HotelMenu, HotelFooter },
+  setup() {
+    return {bedOutline, personCircleOutline}
   },
+  data() {
+    return {
+      routeName: null,
+    };
+  },
+
+  watch: {
+    '$route': 'currentRoute'
+  },
+  methods: {
+    currentRoute() {
+        this.$nextTick(() => {
+            this.routeName = this.$route.name
+        });
+    }
+  }
 };
 </script>
 
 <style>
+.footer-menu {
+  justify-content: space-around;
+}
+.footer-brand {
+  justify-content: center;
+}
 </style>
