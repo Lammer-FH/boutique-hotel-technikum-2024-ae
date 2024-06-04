@@ -22,7 +22,8 @@
 import { IonApp, IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuButton, 
          IonRouterOutlet, } from '@ionic/vue';
 import { bedOutline, personCircleOutline } from 'ionicons/icons';
-import { HotelMenu, HotelFooter } from './organisms'
+import HotelMenu from './organisms/HotelMenu.vue'
+import HotelFooter from './organisms/HotelFooter.vue'
 
 export default {
   name: 'App',
