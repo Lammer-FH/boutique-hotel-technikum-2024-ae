@@ -12,7 +12,7 @@
           <MenuButton
             :icon="personCircleOutline"
             title="Kontakt"
-            link="/kontakt"
+            link="/contact"
           />
         </div>
       </ion-list>

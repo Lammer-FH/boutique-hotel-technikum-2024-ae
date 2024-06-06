@@ -192,7 +192,7 @@ import {
 import { IonPage, IonContent } from "@ionic/vue";
 
 export default {
-  name: "DatenschutzPage",
+  name: "DataProtectionPage",
   components: {
     IonPage,
     IonContent,

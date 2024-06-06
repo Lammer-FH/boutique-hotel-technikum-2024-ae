@@ -48,7 +48,7 @@ import {
 } from "@/assets";
 
 export default {
-  name: "KontaktPage",
+  name: "ContactPage",
   components: {
     IonPage,
     IonContent,

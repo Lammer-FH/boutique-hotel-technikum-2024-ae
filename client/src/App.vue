@@ -30,7 +30,6 @@ import {
   IonMenuButton,
   IonRouterOutlet,
 } from "@ionic/vue";
-import { bedOutline, personCircleOutline } from "ionicons/icons";
 import { HotelMenu, HotelFooter } from "./organisms";
 
 export default {
@@ -47,9 +46,6 @@ export default {
     IonRouterOutlet,
     HotelMenu,
     HotelFooter,
-  },
-  setup() {
-    return { bedOutline, personCircleOutline };
   },
   data() {
     return {

@@ -72,7 +72,7 @@
 import { IonPage, IonContent } from "@ionic/vue";
 
 export default {
-  name: "AGBPage",
+  name: "TermsAndConditionsPage",
   components: {
     IonPage,
     IonContent,

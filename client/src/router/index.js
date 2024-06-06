@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "@ionic/vue-router";
 import {
   HomePage,
-  ImpressumPage,
-  DatenschutzPage,
-  KontaktPage,
-  AGBPage,
+  ImprintPage,
+  DataProtectionPage,
+  ContactPage,
+  TermsAndConditionsPage,
 } from "../pages";
 
 const routes = [
@@ -14,24 +14,24 @@ const routes = [
     component: HomePage,
   },
   {
-    path: "/impressum",
+    path: "/imprint",
     name: "Impressum",
-    component: ImpressumPage,
+    component: ImprintPage,
   },
   {
-    path: "/datenschutz",
+    path: "/data-protection",
     name: "Datenschutz",
-    component: DatenschutzPage,
+    component: DataProtectionPage,
   },
   {
-    path: "/kontakt",
+    path: "/contact",
     name: "Kontakt",
-    component: KontaktPage,
+    component: ContactPage,
   },
   {
-    path: "/agb",
+    path: "/terms-and-conditions",
     name: "AGB",
-    component: AGBPage,
+    component: TermsAndConditionsPage,
   },
 ];
 

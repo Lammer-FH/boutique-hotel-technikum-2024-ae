@@ -79,7 +79,7 @@ import {
 } from "@/assets";
 
 export default {
-  name: "ImpressumPage",
+  name: "ImprintPage",
   components: {
     IonPage,
     IonContent,
