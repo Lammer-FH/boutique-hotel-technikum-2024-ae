@@ -1,36 +1,38 @@
-import { createRouter, createWebHistory } from '@ionic/vue-router';
-import HomePage from '../pages/HomePage.vue';
-import ImpressumPage from "../pages/ImpressumPage.vue";
-import DatenschutzPage from "../pages/DatenschutzPage.vue";
-import KontaktPage from '../pages/KontaktPage.vue';
-import AGBPage from '../pages/AGBPage.vue';
+import { createRouter, createWebHistory } from "@ionic/vue-router";
+import {
+  HomePage,
+  ImpressumPage,
+  DatenschutzPage,
+  KontaktPage,
+  AGBPage,
+} from "../pages";
 
 const routes = [
   {
-    path: '/',
-    name: 'Hotel Technikum',
+    path: "/",
+    name: "Hotel Technikum",
     component: HomePage,
   },
   {
-    path: '/impressum',
-    name: 'Impressum',
+    path: "/impressum",
+    name: "Impressum",
     component: ImpressumPage,
   },
   {
-    path: '/datenschutz',
-    name: 'Datenschutz',
+    path: "/datenschutz",
+    name: "Datenschutz",
     component: DatenschutzPage,
   },
   {
-    path: '/kontakt',
-    name: 'Kontakt',
+    path: "/kontakt",
+    name: "Kontakt",
     component: KontaktPage,
   },
   {
-    path: '/agb',
-    name: 'AGB',
+    path: "/agb",
+    name: "AGB",
     component: AGBPage,
-  }
+  },
 ];
 
 const router = createRouter({
