@@ -1,36 +1,51 @@
 <template>
   <ion-app>
-    <HotelMenu/> 
+    <HotelMenu />
     <ion-page id="main-content">
       <ion-header>
         <ion-toolbar>
-          <ion-title>{{routeName}}</ion-title>
+          <ion-title>{{ routeName }}</ion-title>
           <ion-buttons slot="end">
             <ion-menu-button></ion-menu-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-router-outlet/>
+        <ion-router-outlet />
       </ion-content>
-      <HotelFooter/>
+      <HotelFooter />
     </ion-page>
   </ion-app>
 </template>
 
 <script>
-import { IonApp, IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuButton, 
-         IonRouterOutlet, } from '@ionic/vue';
-import { bedOutline, personCircleOutline } from 'ionicons/icons';
-import HotelMenu from './organisms/HotelMenu.vue'
-import HotelFooter from './organisms/HotelFooter.vue'
+import {
+  IonApp,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonPage,
+  IonButtons,
+  IonMenuButton,
+  IonRouterOutlet,
+} from "@ionic/vue";
+import { HotelMenu, HotelFooter } from "./organisms";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    IonApp, IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonMenuButton, IonRouterOutlet, HotelMenu, HotelFooter },
-  setup() {
-    return {bedOutline, personCircleOutline}
+    IonApp,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonPage,
+    IonButtons,
+    IonMenuButton,
+    IonRouterOutlet,
+    HotelMenu,
+    HotelFooter,
   },
   data() {
     return {
@@ -39,15 +54,15 @@ export default {
   },
 
   watch: {
-    '$route': 'currentRoute'
+    $route: "currentRoute",
   },
   methods: {
     currentRoute() {
-        this.$nextTick(() => {
-            this.routeName = this.$route.name
-        });
-    }
-  }
+      this.$nextTick(() => {
+        this.routeName = this.$route.name;
+      });
+    },
+  },
 };
 </script>
 
@@ -57,5 +72,11 @@ export default {
 }
 .footer-brand {
   justify-content: center;
+}
+
+/* used in other components but only defined once */
+.container {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 </style>
