@@ -3,6 +3,9 @@ package com.example.boutiquehoteltechnikum.services;
 import com.example.boutiquehoteltechnikum.models.RoomEntity;
 import com.example.boutiquehoteltechnikum.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,8 +17,9 @@ public class RoomService {
 
     @Autowired private RoomRepository roomRepository;
 
-    public List<RoomEntity> getRooms() {
-        return roomRepository.findAll();
+    public Page<RoomEntity> getRooms(int limit, int offset) {
+        Pageable pageable = PageRequest.of(offset / limit, limit);
+        return roomRepository.findAll(pageable);
     }
 
     public RoomEntity getRoom(int id) {
