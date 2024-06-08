@@ -48,11 +48,6 @@ public class RoomController {
             .build();
     }
 
-    @GetMapping("/{id}")
-    public RoomDto getRoom(@PathVariable int id) {
-        return roomTransformer.toDto(roomService.getRoom(id));
-    }
-
     // DEMO: just to demonstrate validation and body params
 //    @PostMapping("/")
 //    public void saveRoom(@RequestBody @Valid RoomDto roomDto) {

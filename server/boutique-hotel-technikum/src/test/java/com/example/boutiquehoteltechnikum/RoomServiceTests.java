@@ -8,11 +8,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
@@ -20,41 +22,41 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 public class RoomServiceTests {
 
-//    @Mock
-//    private RoomRepository roomRepository;
-//
-//    @InjectMocks
-//    private RoomService roomService;
-//
-//    @Test
-//    void whenGetRooms_thenReturnListOfRooms() {
-//        List<RoomEntity> mockedRooms = new ArrayList<>();
-//        mockedRooms.add(RoomEntity.builder().roomId(25).name("Raum Eins").description("Beschreibung von Raum Eins.").build());
-//        mockedRooms.add(RoomEntity.builder().roomId(46).name("Raum Zwei").description("Beschreibung von Raum Zwei.").build());
-//
-//        given(roomRepository.findAll()).willReturn(mockedRooms);
-//
-//        List<RoomEntity> result = roomService.getRooms(5, 0);
-//
-//        assertEquals(mockedRooms, result);
-//    }
-//
-//    @Test
-//    void whenGetRoom_thenReturnRoom() {
-//        RoomEntity mockedRoom = RoomEntity.builder().roomId(25).name("Raum Eins").description("Beschreibung von Raum Eins.").build();
-//
-//        given(roomRepository.findById(25)).willReturn(Optional.ofNullable(mockedRoom));
-//
-//        RoomEntity result = roomService.getRoom(25);
-//
-//        assertEquals(mockedRoom, result);
-//    }
-//
-//    @Test
-//    void whenGetRoomWithInvalidId_thenReturnError() {
-//        given(roomRepository.findById(105)).willReturn(Optional.ofNullable(null));
-//
-//        Exception exception = assertThrows(ResponseStatusException.class, () -> roomService.getRoom(105));
-//        assertTrue(exception.getMessage().contains("Room with id 105 not found"));
-//    }
+    @Mock
+    private RoomRepository roomRepository;
+
+    @InjectMocks
+    private RoomService roomService;
+
+    private List<RoomEntity> mockedRoomEntities = Arrays.asList(
+            RoomEntity.builder().roomId(1).name("Raum Eins").description("Beschreibung von Raum Eins.").build(),
+            RoomEntity.builder().roomId(2).name("Raum Zwei").description("Beschreibung von Raum Zwei.").build(),
+            RoomEntity.builder().roomId(3).name("Raum Drei").description("Beschreibung von Raum Drei.").build(),
+            RoomEntity.builder().roomId(4).name("Raum Vier").description("Beschreibung von Raum Vier.").build(),
+            RoomEntity.builder().roomId(5).name("Raum Fuenf").description("Beschreibung von Raum Fuenf.").build()
+    );
+
+    @Test
+    void whenGetRooms_thenReturnPageOfRooms() {
+        Pageable pageable= PageRequest.of(0, 5);
+        Page<RoomEntity> mockedResult = new PageImpl<>(mockedRoomEntities, pageable,150);
+
+        given(roomRepository.findAll(pageable)).willReturn(mockedResult);
+
+        Page<RoomEntity> result = roomService.getRooms(5, 0);
+
+        assertEquals(mockedResult, result);
+    }
+
+    @Test
+    void whenGetRoomsWithDifferentLimitAndOffset_thenReturnPageOfRooms() {
+        Pageable pageable= PageRequest.of(2, 3);
+        Page<RoomEntity> mockedResult = new PageImpl<>(mockedRoomEntities, pageable,150);
+
+        given(roomRepository.findAll(pageable)).willReturn(mockedResult);
+
+        Page<RoomEntity> result = roomService.getRooms(3, 8);
+
+        assertEquals(mockedResult, result);
+    }
 }

@@ -20,13 +20,15 @@ public class RoomTransformer implements ITransformer<RoomEntity, RoomDto> {
             characteristicDtos.add(CharacteristicDto.builder()
                     .characteristicId(characteristicEntity.getCharacteristicId())
                     .name(characteristicEntity.getName())
+                    .icon(characteristicEntity.getIcon())
                     .build());
         }
         List<RoomImageDto> roomImageDtos = new ArrayList<>();
         for (RoomImageEntity roomImageEntity : roomEntity.getImages()) {
             roomImageDtos.add(RoomImageDto.builder()
                     .roomImageId(roomImageEntity.getRoomImageId())
-                    .imagePath(roomImageEntity.getImagePath())
+                    .filename(roomImageEntity.getFilename())
+                    .isAnchor(roomImageEntity.isAnchor())
                     .build());
         }
         return  RoomDto.builder()

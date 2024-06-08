@@ -59,3 +59,9 @@ npm run build
 ```
 npm run lint
 ```
+
+## Additionals
+
+### Icons
+
+The used Icons are provided by <a href="https://ionic.io/ionicons">Ionic</a> Icons as well as <a href="https://icon-sets.iconify.design/mdi/">Iconify</a>

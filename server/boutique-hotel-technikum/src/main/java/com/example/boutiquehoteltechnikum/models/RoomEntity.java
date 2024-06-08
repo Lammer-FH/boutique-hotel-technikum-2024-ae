@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "Rooms")
@@ -36,6 +35,6 @@ public class RoomEntity {
     @Size(max = 50, message = "Der Name darf nicht länger als 50 Zeichen sein!")
     private String name;
 
-    @Size(max = 500, message = "Die beschreibung darf nicht länger als 500 Zeichen sein!")
+    @Size(max = 500, message = "Die Beschreibung darf nicht länger als 500 Zeichen sein!")
     private String description;
 }

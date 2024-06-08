@@ -19,4 +19,9 @@ public class CharacteristicDto {
     @NotBlank(message = "Der Name darf nicht leer sein!")
     @Size(max = 50, message = "Der Name darf nicht länger als 50 Zeichen sein!")
     private String name;
+
+    @JsonProperty("icon")
+    @NotBlank(message = "Das Icon darf nicht leer sein!")
+    @Size(max = 50, message = "Das Icon darf nicht länger als 50 Zeichen sein!")
+    private String icon;
 }

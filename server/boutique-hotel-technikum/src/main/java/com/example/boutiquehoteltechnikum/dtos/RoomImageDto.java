@@ -15,8 +15,12 @@ public class RoomImageDto {
     @JsonProperty("roomImageId")
     private int roomImageId;
 
-    @JsonProperty("imagePath")
-    @NotBlank(message = "Der Pfad darf nicht leer sein!")
-    @Size(max = 500, message = "Der Pfad darf nicht länger als 500 Zeichen sein!")
-    private String imagePath;
+    @JsonProperty("filename")
+    @NotBlank(message = "Der Dateiname darf nicht leer sein!")
+    @Size(max = 500, message = "Der Dateiname darf nicht länger als 500 Zeichen sein!")
+    private String filename;
+
+    @JsonProperty("isAnchor")
+    @NotBlank(message = "Es muss angegeben werden ob dieses Bild das Hauptbild ist!")
+    private boolean isAnchor;
 }

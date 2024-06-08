@@ -27,6 +27,6 @@ public class RoomDto {
     private String name;
 
     @JsonProperty("description")
-    @Size(max = 500, message = "Die beschreibung darf nicht länger als 500 Zeichen sein!")
+    @Size(max = 500, message = "Die Beschreibung darf nicht länger als 500 Zeichen sein!")
     private String description;
 }

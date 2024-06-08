@@ -33,29 +33,29 @@ INSERT INTO rooms (room_id, description, name) VALUES (22, 'Demo Beschreibung 22
 INSERT INTO rooms (room_id, description, name) VALUES (23, 'Demo Beschreibung 23', 'Demo Zimmer');
 
 # seed room images
-INSERT INTO room_images (room_image_id, image_path, room_id) VALUES (1, 'RoomImage1', 1);
-INSERT INTO room_images (room_image_id, image_path, room_id) VALUES (2, 'RoomImage2', 1);
-INSERT INTO room_images (room_image_id, image_path, room_id) VALUES (3, 'RoomImage3', 2);
-INSERT INTO room_images (room_image_id, image_path, room_id) VALUES (4, 'RoomImage4', 3);
-INSERT INTO room_images (room_image_id, image_path, room_id) VALUES (5, 'RoomImage5', 3);
-INSERT INTO room_images (room_image_id, image_path, room_id) VALUES (6, 'RoomImage6', 3);
-INSERT INTO room_images (room_image_id, image_path, room_id) VALUES (7, 'RoomImage7', 4);
+INSERT INTO room_images (room_image_id, filename, room_id, is_anchor) VALUES (1, 'RoomImage1.jpg', 1, true);
+INSERT INTO room_images (room_image_id, filename, room_id, is_anchor) VALUES (2, 'RoomImage2.jpg', 1, false);
+INSERT INTO room_images (room_image_id, filename, room_id, is_anchor) VALUES (3, 'RoomImage3.jpg', 2, true);
+INSERT INTO room_images (room_image_id, filename, room_id, is_anchor) VALUES (4, 'RoomImage4.jpg', 3, true);
+INSERT INTO room_images (room_image_id, filename, room_id, is_anchor) VALUES (5, 'RoomImage5.jpg', 3, false);
+INSERT INTO room_images (room_image_id, filename, room_id, is_anchor) VALUES (6, 'RoomImage6.jpg', 3, false);
+INSERT INTO room_images (room_image_id, filename, room_id, is_anchor) VALUES (7, 'RoomImage7.jpg', 4, true);
 
 # seed characteristics
-INSERT INTO characteristics (characteristic_id, name) VALUES (1, 'Minibar');
-INSERT INTO characteristics (characteristic_id, name) VALUES (2, 'Küche');
-INSERT INTO characteristics (characteristic_id, name) VALUES (3, 'Badewanne');
-INSERT INTO characteristics (characteristic_id, name) VALUES (4, 'Dusche');
-INSERT INTO characteristics (characteristic_id, name) VALUES (5, 'WLAN');
-INSERT INTO characteristics (characteristic_id, name) VALUES (6, 'Nichtraucherzimmer');
-INSERT INTO characteristics (characteristic_id, name) VALUES (7, 'Balkon');
-INSERT INTO characteristics (characteristic_id, name) VALUES (8, 'TV');
-INSERT INTO characteristics (characteristic_id, name) VALUES (9, 'Waschmaschine');
-INSERT INTO characteristics (characteristic_id, name) VALUES (10, 'Handtücher');
-INSERT INTO characteristics (characteristic_id, name) VALUES (11, 'Klimaanalage');
-INSERT INTO characteristics (characteristic_id, name) VALUES (12, 'Heizung');
-INSERT INTO characteristics (characteristic_id, name) VALUES (13, 'Kinderbett');
-INSERT INTO characteristics (characteristic_id, name) VALUES (14, 'Bad und WC getrennt');
+INSERT INTO characteristics (characteristic_id, name, icon) VALUES (1, 'Minibar', 'mdi:local-bar');
+INSERT INTO characteristics (characteristic_id, name, icon) VALUES (2, 'Küche', 'mdi:kitchen-counter');
+INSERT INTO characteristics (characteristic_id, name, icon) VALUES (3, 'Badewanne', 'mdi:bathtub');
+INSERT INTO characteristics (characteristic_id, name, icon) VALUES (4, 'Dusche', 'mdi:shower-head');
+INSERT INTO characteristics (characteristic_id, name, icon) VALUES (5, 'WLAN', 'mdi:wifi');
+INSERT INTO characteristics (characteristic_id, name, icon) VALUES (6, 'Nichtraucherzimmer', 'mdi:smoking-off');
+INSERT INTO characteristics (characteristic_id, name, icon) VALUES (7, 'Balkon', 'mdi:balcony');
+INSERT INTO characteristics (characteristic_id, name, icon) VALUES (8, 'TV', 'mdi:tv');
+INSERT INTO characteristics (characteristic_id, name, icon) VALUES (9, 'Waschmaschine', 'mdi:washer');
+INSERT INTO characteristics (characteristic_id, name, icon) VALUES (10, 'Doppelbett', 'mdi:bed-king');
+INSERT INTO characteristics (characteristic_id, name, icon) VALUES (11, 'Klimaanalage', 'mdi:air-conditioner');
+INSERT INTO characteristics (characteristic_id, name, icon) VALUES (12, 'Heizung', 'mdi:heating-coil');
+INSERT INTO characteristics (characteristic_id, name, icon) VALUES (13, 'Kinderbett', 'mdi:human-male-female-child');
+INSERT INTO characteristics (characteristic_id, name, icon) VALUES (14, 'Bad und WC getrennt', 'mdi:toilet');
 
 # seed room_to_characeteristics
 INSERT INTO room_to_characteristics (room_id, characteristic_id) VALUES (1, 1);
@@ -99,13 +99,3 @@ INSERT INTO room_to_characteristics (room_id, characteristic_id) VALUES (4, 10);
 INSERT INTO room_to_characteristics (room_id, characteristic_id) VALUES (4, 11);
 INSERT INTO room_to_characteristics (room_id, characteristic_id) VALUES (4, 12);
 INSERT INTO room_to_characteristics (room_id, characteristic_id) VALUES (4, 14);
-
-
-
-
-
-
-
-
-
-
