@@ -1,4 +1,4 @@
-package com.example.boutiquehoteltechnikum;
+package com.example.boutiquehoteltechnikum.unit;
 
 import com.example.boutiquehoteltechnikum.models.RoomEntity;
 import com.example.boutiquehoteltechnikum.repositories.RoomRepository;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-public class RoomServiceTests {
+public class RoomServiceUnitTests {
 
     @Mock
     private RoomRepository roomRepository;
@@ -37,7 +37,7 @@ public class RoomServiceTests {
     );
 
     @Test
-    void whenGetRooms_thenReturnPageOfRooms() {
+    void givenLimitAndOffset_whenGetRooms_thenReturnPageOfRooms() {
         Pageable pageable= PageRequest.of(0, 5);
         Page<RoomEntity> mockedResult = new PageImpl<>(mockedRoomEntities, pageable,150);
 
@@ -49,7 +49,7 @@ public class RoomServiceTests {
     }
 
     @Test
-    void whenGetRoomsWithDifferentLimitAndOffset_thenReturnPageOfRooms() {
+    void givenDifferentLimitAndOffset_whenGetRooms_thenReturnPageOfRooms() {
         Pageable pageable= PageRequest.of(2, 3);
         Page<RoomEntity> mockedResult = new PageImpl<>(mockedRoomEntities, pageable,150);
 

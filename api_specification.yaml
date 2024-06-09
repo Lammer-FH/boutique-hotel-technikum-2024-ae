@@ -2,24 +2,24 @@ openapi: 3.0.3
 info:
   title: Hotel Booking API
   version: 1.0.0
-  description: API for booking hotel rooms and checking availability.
+  description: API for booking hotel rooms and checking availability
 servers:
   - url: https://api.example.com/api/v1
 paths:
   /rooms:
     get:
-      summary: Returns a list of existing hotel rooms.
+      summary: Returns a list of existing hotel rooms
       parameters:
         - name: limit
           in: query
-          required: false
+          required: true
           description: max number of rooms viewable per page
           example: 10
           schema:
             type: integer
         - name: offset
           in: query
-          required: false
+          required: true
           description: number of rooms already viewed
           example: 5
           schema:
@@ -60,74 +60,59 @@ paths:
                   rooms:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Room'
+                      $ref: "#/components/schemas/Room"
         401:
           description: Client Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
-          description: no rooms available with queried parameters
+          description: No rooms available with queried parameters
         500:
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
-  /rooms/{id}:
+  /images:
     get:
-      summary: Returns details of a specific room.
+      summary: Returns an image
       parameters:
-        - name: id
-          in: path
+        - name: filename
+          in: query
           required: true
-          description: Identifier of the specific room
-          example: 5
-          schema:
-            type: integer
-        - name: startDate
-          in: query
-          required: false
-          description: Checkin date in the format YYYY-MM-DD
-          example: 2024-06-01
+          description: Name of the image file
+          example: "Image.jpg"
           schema:
             type: string
-            format: date
-        - name: endDate
-          in: query
-          required: false
-          description: Checkout date in the format YYYY-MM-DD
-          example: 2024-06-07
-          schema:
-            type: string
-            format: date
       responses:
         200:
-          description: Room details
+          description: Image as Byte-Array
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Room'
-        404:
-          description: Room not available with queried parameters
+                type: string
+                example: "ùéŸaåßðWßÙ»EøOmà¿x?CÒü7l'“M»]»EøOmà?CÒü7lWßÙ»EøOü7l'“MEøà¿x?CÒü7l"
         401:
           description: Client Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
+        404:
+          description: Image could not be found
         500:
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /bookings:
     post:
-      summary: Books a room for a specified date range for a specific customer.
+      summary: Books a room for a specified date range for a specific customer
       requestBody:
         required: true
         content:
@@ -181,7 +166,7 @@ paths:
                     format: date
                     example: "YYYY-MM-DD"
                   room:
-                    $ref: '#/components/schemas/Room'
+                    $ref: "#/components/schemas/Room"
                   firstName:
                     type: string
                     example: "John"
@@ -200,20 +185,20 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
 components:
   schemas:
     Room:
       type: object
       properties:
-        id:
+        roomId:
           type: integer
           example: 1
         name:
@@ -227,23 +212,29 @@ components:
           items:
             type: object
             properties:
-              id:
+              characteristicId:
                 type: integer
                 example: 1
               name:
                 type: string
                 example: "TV"
+              icon:
+                type: string
+                example: "mdi:tv"
         images:
           type: array
           items:
             type: object
             properties:
-              id:
+              roomImageId:
                 type: integer
                 example: 1
-              name:
+              filename:
                 type: string
                 example: "fse4s45r5s44r3d.jpg"
+              isAnchor:
+                type: boolean
+                example: true
     ErrorResponse:
       type: object
       properties:
