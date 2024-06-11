@@ -48,6 +48,21 @@ public class RoomController {
             .build();
     }
 
+    @GetMapping("/availability")
+    public RoomResponseObject getAvailableRooms(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
+        List<RoomEntity> availableRooms = roomService.getAvailableRooms(startDate, endDate);
+        List<RoomDto> roomDtos = new ArrayList<>();
+        for (RoomEntity roomEntity : availableRooms) {
+            roomDtos.add(roomTransformer.toDto(roomEntity));
+        }
+        return RoomResponseObject.builder()
+            .limit(roomDtos.size())
+            .offset(0)
+            .total(roomDtos.size())
+            .roomDtos(roomDtos)
+            .build();
+    }
+
     // DEMO: just to demonstrate validation and body params
 //    @PostMapping("/")
 //    public void saveRoom(@RequestBody @Valid RoomDto roomDto) {

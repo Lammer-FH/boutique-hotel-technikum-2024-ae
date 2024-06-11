@@ -8,6 +8,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.util.List;
+
 @Service
 public class RoomService {
 
@@ -16,5 +19,10 @@ public class RoomService {
     public Page<RoomEntity> getRooms(int limit, int offset) {
         Pageable pageable = PageRequest.of(offset / limit, limit);
         return roomRepository.findAll(pageable);
+    }
+    public List<RoomEntity> getAvailableRooms(String startDate, String endDate) {
+        Date start = Date.valueOf(startDate);
+        Date end = Date.valueOf(endDate);
+        return roomRepository.findAvailableRooms(start, end);
     }
 }
