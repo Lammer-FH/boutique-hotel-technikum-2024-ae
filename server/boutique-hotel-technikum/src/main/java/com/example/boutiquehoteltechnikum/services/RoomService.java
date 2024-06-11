@@ -25,4 +25,19 @@ public class RoomService {
         Date end = Date.valueOf(endDate);
         return roomRepository.findAvailableRooms(start, end);
     }
+    public RoomEntity getRoomById(int id, String startDate, String endDate) {
+        RoomEntity roomEntity = roomRepository.findById(id).orElse(null);
+        if (roomEntity == null) {
+            return null;
+        }
+        if (startDate != null && endDate != null) {
+            Date start = Date.valueOf(startDate);
+            Date end = Date.valueOf(endDate);
+            List<RoomEntity> availableRooms = roomRepository.findAvailableRooms(start, end);
+            if (!availableRooms.contains(roomEntity)) {
+                return null;
+            }
+        }
+        return roomEntity;
+    }
 }

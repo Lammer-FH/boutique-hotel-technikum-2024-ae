@@ -63,6 +63,15 @@ public class RoomController {
             .build();
     }
 
+    @GetMapping("/{id}")
+    public RoomDto getRoomById(@PathVariable("id") int id, @RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate) {
+        RoomEntity roomEntity = roomService.getRoomById(id, startDate, endDate);
+        if (roomEntity == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room not found or unavailable for the specified dates");
+        }
+        return roomTransformer.toDto(roomEntity);
+    }
+
     // DEMO: just to demonstrate validation and body params
 //    @PostMapping("/")
 //    public void saveRoom(@RequestBody @Valid RoomDto roomDto) {
