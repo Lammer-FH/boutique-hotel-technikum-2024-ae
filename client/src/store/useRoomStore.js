@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { formatDate } from "@/utils/dateUtils";
 
 // error: process is not defined??
 // const apiUrl = process.env.VUE_APP_API_URL;
@@ -42,6 +43,29 @@ export const useRoomStore = defineStore("room", {
     },
     setCurrentRoom(room) {
       this.currentRoom = room;
+    },
+    fetchAvailableRooms(startDate, endDate) {
+      this.loading = true;
+      const formattedStartDate = formatDate(startDate);
+      const formattedEndDate = formatDate(endDate);
+      axios
+        .get(apiUrl + "/rooms/availability", {
+          params: {
+            startDate: formattedStartDate,
+            endDate: formattedEndDate,
+          },
+        })
+        .then((response) => {
+          this.rooms = response.data.roomDtos;
+          this.total = response.data.total;
+          this.offset = this.limit;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .then(() => {
+          this.loading = false;
+        });
     },
   },
 });

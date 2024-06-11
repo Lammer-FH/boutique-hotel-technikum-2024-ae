@@ -114,8 +114,8 @@ INSERT INTO guests (guest_id, first_name, last_name, email) VALUES
 
 # Seed bookings
 INSERT INTO bookings (booking_id, booking_number, start_date, end_date, breakfast) VALUES
-(1, 'BKG123', '2024-06-01', '2024-06-07', 1),
-(2, 'BKG124', '2024-06-05', '2024-06-10', 0);
+(1, 'BKG123', '2024-06-15', '2024-06-18', 1),
+(2, 'BKG124', '2024-06-16', '2024-06-18', 0);
 
 # Seed guest_to_bookings
 INSERT INTO guest_to_bookings (booking_id, guest_id) VALUES
