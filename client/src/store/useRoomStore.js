@@ -37,21 +37,18 @@ export const useRoomStore = defineStore("room", {
           params.endDate = formattedEndDate;
         }
 
-        console.log("Fetching rooms with params:", params); // Debug log
-
         axios
           .get(apiUrl + "/rooms", { params })
           .then((response) => {
-            console.log("Response from server:", response.data); // Debug log
 
             if (startDate && endDate) {
               this.rooms = response.data.roomDtos;
               this.total = response.data.total;
-              this.offset = this.limit; // Reset offset for pagination
+              this.offset = this.limit;
             } else {
               this.rooms.push(...response.data.roomDtos);
               this.total = response.data.total;
-              this.offset += this.limit; // Update offset for pagination
+              this.offset += this.limit;
             }
           })
           .catch((error) => {
