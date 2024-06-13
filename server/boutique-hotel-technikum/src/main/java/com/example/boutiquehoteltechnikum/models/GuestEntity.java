@@ -1,6 +1,7 @@
 package com.example.boutiquehoteltechnikum.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Entity
@@ -17,11 +18,14 @@ public class GuestEntity {
     private int guestId;
 
     @Column(nullable = false)
+    @Size(max = 50, message = "Der Vorname darf nicht länger als 50 Zeichen sein!")
     private String firstName;
 
     @Column(nullable = false)
+    @Size(max = 50, message = "Der Nachname darf nicht länger als 50 Zeichen sein!")
     private String lastName;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
+    @Size(max = 50, message = "Die Email darf nicht länger als 50 Zeichen sein!")
     private String email;
 }
