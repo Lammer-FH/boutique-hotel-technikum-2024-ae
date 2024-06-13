@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,25 +39,38 @@ public class RoomServiceUnitTests {
 
     @Test
     void givenLimitAndOffset_whenGetRooms_thenReturnPageOfRooms() {
-        Pageable pageable= PageRequest.of(0, 5);
-        Page<RoomEntity> mockedResult = new PageImpl<>(mockedRoomEntities, pageable,150);
+        Pageable pageable = PageRequest.of(0, 5);
+        Page<RoomEntity> mockedResult = new PageImpl<>(mockedRoomEntities, pageable, 150);
 
         given(roomRepository.findAll(pageable)).willReturn(mockedResult);
 
-        Page<RoomEntity> result = roomService.getRooms(5, 0);
+        Page<RoomEntity> result = roomService.getRooms(5, 0, null, null);
 
         assertEquals(mockedResult, result);
     }
 
     @Test
     void givenDifferentLimitAndOffset_whenGetRooms_thenReturnPageOfRooms() {
-        Pageable pageable= PageRequest.of(2, 3);
-        Page<RoomEntity> mockedResult = new PageImpl<>(mockedRoomEntities, pageable,150);
+        Pageable pageable = PageRequest.of(2, 3);
+        Page<RoomEntity> mockedResult = new PageImpl<>(mockedRoomEntities, pageable, 150);
 
         given(roomRepository.findAll(pageable)).willReturn(mockedResult);
 
-        Page<RoomEntity> result = roomService.getRooms(3, 8);
+        Page<RoomEntity> result = roomService.getRooms(3, 8, null, null);
 
         assertEquals(mockedResult, result);
+    }
+
+    @Test
+    void givenStartDateAndEndDate_whenGetRooms_thenReturnListOfAvailableRooms() {
+        Date startDate = Date.valueOf("2024-06-01");
+        Date endDate = Date.valueOf("2024-06-30");
+
+        given(roomRepository.findAvailableRooms(startDate, endDate)).willReturn(mockedRoomEntities);
+
+        Page<RoomEntity> result = roomService.getRooms(5, 0, "2024-06-01", "2024-06-30");
+
+        assertEquals(mockedRoomEntities, result.getContent());
+        assertEquals(mockedRoomEntities.size(), result.getTotalElements());
     }
 }

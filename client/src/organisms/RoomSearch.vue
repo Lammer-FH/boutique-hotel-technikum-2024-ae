@@ -41,8 +41,10 @@ export default {
         if (new Date(this.endDate) < new Date(this.startDate)) {
           this.isAlertOpen = true;
         } else {
-          this.roomStore.fetchAvailableRooms(this.startDate, this.endDate);
+          this.roomStore.fetchRooms(this.startDate, this.endDate);
         }
+      } else {
+        this.roomStore.fetchRooms();
       }
     },
   },
