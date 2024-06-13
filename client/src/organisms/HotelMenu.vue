@@ -8,7 +8,7 @@
     <ion-content class="ion-padding">
       <ion-list>
         <div>
-          <MenuButton :icon="bedOutline" title="Zimmer buchen" />
+          <MenuButton :icon="bedOutline" title="Zimmer buchen" link="/rooms" />
           <MenuButton
             :icon="personCircleOutline"
             title="Kontakt"

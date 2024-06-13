@@ -5,7 +5,9 @@ import {
   DataProtectionPage,
   ContactPage,
   TermsAndConditionsPage,
-} from "../pages";
+  RoomsPage,
+  RoomDetailsPage,
+} from "@/pages";
 
 const routes = [
   {
@@ -32,6 +34,16 @@ const routes = [
     path: "/terms-and-conditions",
     name: "AGB",
     component: TermsAndConditionsPage,
+  },
+  {
+    path: "/rooms",
+    name: "Zimmer",
+    component: RoomsPage,
+  },
+  {
+    path: "/roomDetails",
+    name: "Details",
+    component: RoomDetailsPage,
   },
 ];
 

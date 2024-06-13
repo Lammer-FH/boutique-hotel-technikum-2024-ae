@@ -18,6 +18,12 @@ docker-compose up
 
 This should create a mysql docker conatiner and start it.
 
+The script `Seeder.sql` provided in `server/sql` inserts test data into the database. An existing table structure is mandatory for execution. Common approach:
+
+- start backend application
+- query one endpoint (Spring initializes data structure automatically)
+- execute sql script
+
 ### Client
 
 Install dependencies in the `client/` directory:
@@ -53,3 +59,9 @@ npm run build
 ```
 npm run lint
 ```
+
+## Additionals
+
+### Icons
+
+The used Icons are provided by <a href="https://ionic.io/ionicons">Ionic</a> Icons as well as <a href="https://icon-sets.iconify.design/mdi/">Iconify</a>

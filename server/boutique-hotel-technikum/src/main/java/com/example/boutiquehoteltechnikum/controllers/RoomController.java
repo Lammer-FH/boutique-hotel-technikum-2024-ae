@@ -2,9 +2,15 @@ package com.example.boutiquehoteltechnikum.controllers;
 
 import com.example.boutiquehoteltechnikum.dtos.RoomDto;
 import com.example.boutiquehoteltechnikum.models.RoomEntity;
+import com.example.boutiquehoteltechnikum.objects.RoomResponseObject;
 import com.example.boutiquehoteltechnikum.services.RoomService;
+import com.example.boutiquehoteltechnikum.transformer.RoomTransformer;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,29 +23,29 @@ public class RoomController {
     @Autowired
     private RoomService roomService;
 
+    @Autowired
+    private RoomTransformer roomTransformer;
+
     @GetMapping("")
-    public List<RoomDto> getRooms() {
-        List<RoomEntity> roomEntities = roomService.getRooms();
+    public RoomResponseObject getRooms(@PathParam("limit") int limit, @PathParam("offset") int offset) {
+        if (limit <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Limit (%d) cannot be less or equal zero", limit));
+        }
+        if (offset < 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Offset (%d) cannot be less than zero", offset));
+        }
+        Page<RoomEntity> roomPages = roomService.getRooms(limit, offset);
+        List<RoomEntity> roomEntities = roomPages.getContent();
         List<RoomDto> roomDtos = new ArrayList<>();
         for (RoomEntity roomEntity : roomEntities) {
-            roomDtos.add(
-                RoomDto.builder()
-                    .id(roomEntity.getId())
-                    .name(roomEntity.getName())
-                    .description(roomEntity.getDescription())
-                    .build());
+            roomDtos.add(roomTransformer.toDto(roomEntity));
         }
-        return roomDtos;
-    }
-
-    @GetMapping("/{id}")
-    public RoomDto getRoom(@PathVariable int id) {
-        RoomEntity roomEntity = roomService.getRoom(id);
-        return RoomDto.builder()
-                .id(roomEntity.getId())
-                .name(roomEntity.getName())
-                .description(roomEntity.getDescription())
-                .build();
+        return RoomResponseObject.builder()
+            .limit(limit)
+            .offset(offset)
+            .total(roomPages.getTotalElements())
+            .roomDtos(roomDtos)
+            .build();
     }
 
     // DEMO: just to demonstrate validation and body params
