@@ -20,6 +20,9 @@ public class RoomEntity {
     @GeneratedValue
     private int roomId;
 
+    @ManyToMany(mappedBy = "rooms")
+    private List<BookingEntity> bookings;
+
     @ManyToMany
     @JoinTable(
             name = "RoomToCharacteristics",

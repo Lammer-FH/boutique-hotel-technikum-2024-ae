@@ -5,7 +5,6 @@ import com.example.boutiquehoteltechnikum.models.RoomEntity;
 import com.example.boutiquehoteltechnikum.objects.RoomResponseObject;
 import com.example.boutiquehoteltechnikum.services.RoomService;
 import com.example.boutiquehoteltechnikum.transformer.RoomTransformer;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -59,6 +58,8 @@ public class RoomController {
 
     @GetMapping("/{id}")
     public RoomDto getRoomById(@PathVariable("id") int id, @RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate) {
+        validateDates(startDate, endDate);
+
         RoomEntity roomEntity = roomService.getRoomById(id, startDate, endDate);
         if (roomEntity == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room not found or unavailable for the specified dates");

@@ -39,4 +39,11 @@ public class BookingEntity {
             joinColumns = @JoinColumn(name = "bookingId"),
             inverseJoinColumns = @JoinColumn(name = "guestId"))
     private List<GuestEntity> guests;
+
+    @ManyToMany  
+    @JoinTable(  
+            name = "BookingsToRooms",  
+            joinColumns = @JoinColumn(name = "bookingId"),  
+            inverseJoinColumns = @JoinColumn(name = "roomId"))  
+    private List<RoomEntity> rooms;  
 }
