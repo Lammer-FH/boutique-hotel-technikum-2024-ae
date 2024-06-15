@@ -106,7 +106,7 @@ public class RoomControllerUnitTests {
         Pageable pageable= PageRequest.of(0, 5);
         Page<RoomEntity> mockedResult = new PageImpl<>(roomEntities, pageable,150);
 
-        when(roomService.getRooms(5, 0)).thenReturn(mockedResult);
+        when(roomService.getRooms(5, 0, null, null)).thenReturn(mockedResult);
         when(roomTransformer.toDto(roomEntities.get(0))).thenReturn(roomDtos.get(0));
         when(roomTransformer.toDto(roomEntities.get(1))).thenReturn(roomDtos.get(1));
         when(roomTransformer.toDto(roomEntities.get(2))).thenReturn(roomDtos.get(2));
@@ -129,7 +129,7 @@ public class RoomControllerUnitTests {
         Pageable pageable= PageRequest.of(2, 3);
         Page<RoomEntity> mockedResult = new PageImpl<>(roomEntities.subList(0, 3), pageable,150);
 
-        when(roomService.getRooms(3, 8)).thenReturn(mockedResult);
+        when(roomService.getRooms(3, 8, null, null)).thenReturn(mockedResult);
         when(roomTransformer.toDto(roomEntities.get(0))).thenReturn(roomDtos.get(0));
         when(roomTransformer.toDto(roomEntities.get(1))).thenReturn(roomDtos.get(1));
         when(roomTransformer.toDto(roomEntities.get(2))).thenReturn(roomDtos.get(2));
@@ -163,5 +163,27 @@ public class RoomControllerUnitTests {
             .andReturn().getResponse().getErrorMessage();
 
         assertThat(result).isEqualTo("Offset (-5) cannot be less than zero");
+    }
+
+    @Test
+    void givenStartDateAndEndDate_whenGetRooms_thenReturnListOfAvailableRooms() throws Exception {
+        RoomResponseObject mockedRoomResponseObject = new RoomResponseObject(5, 0, 5, roomDtos);
+
+        when(roomService.getRooms(5, 0, "2024-06-01", "2024-06-30")).thenReturn(new PageImpl<>(roomEntities));
+        when(roomTransformer.toDto(roomEntities.get(0))).thenReturn(roomDtos.get(0));
+        when(roomTransformer.toDto(roomEntities.get(1))).thenReturn(roomDtos.get(1));
+        when(roomTransformer.toDto(roomEntities.get(2))).thenReturn(roomDtos.get(2));
+        when(roomTransformer.toDto(roomEntities.get(3))).thenReturn(roomDtos.get(3));
+        when(roomTransformer.toDto(roomEntities.get(4))).thenReturn(roomDtos.get(4));
+
+        String result = this.mockMvc.perform(get("/api/v1/rooms")
+                    .param("limit", "5")
+                    .param("offset", "0")
+                    .param("startDate", "2024-06-01")
+                    .param("endDate", "2024-06-30"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        assertThat(result).isEqualToIgnoringWhitespace(objectMapper.writeValueAsString(mockedRoomResponseObject));
     }
 }
