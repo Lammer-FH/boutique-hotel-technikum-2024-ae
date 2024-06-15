@@ -12,14 +12,17 @@ export const useRoomStore = defineStore("room", {
     offset: 0,
     total: 1, // to request at least once
     currentRoom: {},
+    startDate: null,
+    endDate: null,
   }),
   getters: {},
   actions: {
-    fetchRooms(startDate, endDate) {
-      // Reset offset and rooms if filtering by date
-      if (startDate && endDate) {
+    fetchRooms(startDate = this.startDate, endDate = this.endDate) {
+      if (startDate && endDate && (startDate !== this.startDate || endDate !== this.endDate)) {
         this.offset = 0;
         this.rooms = [];
+        this.startDate = startDate;
+        this.endDate = endDate;
       }
 
       if (!this.loading && this.rooms.length < this.total) {
@@ -30,9 +33,9 @@ export const useRoomStore = defineStore("room", {
           offset: this.offset,
         };
 
-        if (startDate && endDate) {
-          const formattedStartDate = formatDate(startDate);
-          const formattedEndDate = formatDate(endDate);
+        if (this.startDate && this.endDate) {
+          const formattedStartDate = formatDate(this.startDate);
+          const formattedEndDate = formatDate(this.endDate);
           params.startDate = formattedStartDate;
           params.endDate = formattedEndDate;
         }
@@ -40,16 +43,13 @@ export const useRoomStore = defineStore("room", {
         axios
           .get(apiUrl + "/rooms", { params })
           .then((response) => {
-
-            if (startDate && endDate) {
+            if (this.offset === 0) {
               this.rooms = response.data.roomDtos;
-              this.total = response.data.total;
-              this.offset = this.limit;
             } else {
               this.rooms.push(...response.data.roomDtos);
-              this.total = response.data.total;
-              this.offset += this.limit;
             }
+            this.total = response.data.total;
+            this.offset += this.limit;
           })
           .catch((error) => {
             console.log(error);
