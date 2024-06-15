@@ -1,7 +1,7 @@
 USE `boutique-hotel-technikum-db`;
 
 # Clear existing data
-DELETE FROM booking_to_rooms;
+DELETE FROM bookings_to_rooms;
 DELETE FROM guest_to_bookings;
 DELETE FROM bookings;
 DELETE FROM guests;
@@ -114,15 +114,15 @@ INSERT INTO guests (guest_id, first_name, last_name, email) VALUES
 
 # Seed bookings
 INSERT INTO bookings (booking_id, booking_number, start_date, end_date, breakfast) VALUES
-(1, 'BKG123', '2024-06-15', '2024-06-18', 1),
-(2, 'BKG124', '2024-06-16', '2024-06-18', 0);
+(1, 'BKG123', '2024-06-20', '2024-06-23', 1),
+(2, 'BKG124', '2024-06-21', '2024-06-23', 0);
 
 # Seed guest_to_bookings
 INSERT INTO guest_to_bookings (booking_id, guest_id) VALUES
 (1, 1),
 (2, 2);
 
-# Seed booking_to_rooms
-INSERT INTO booking_to_rooms (booking_id, room_id) VALUES
+# Seed bookings_to_rooms
+INSERT INTO bookings_to_rooms (booking_id, room_id) VALUES
 (1, 1),
 (2, 2);
