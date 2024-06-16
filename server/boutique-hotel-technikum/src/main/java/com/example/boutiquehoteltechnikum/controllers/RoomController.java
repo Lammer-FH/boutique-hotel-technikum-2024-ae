@@ -11,11 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -40,7 +37,7 @@ public class RoomController {
         if (offset < 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Offset (%d) cannot be less than zero", offset));
         }
-        validateDates(startDate, endDate);
+        roomService.validateDates(startDate, endDate);
 
         Page<RoomEntity> roomPages = roomService.getRooms(limit, offset, startDate, endDate);
         List<RoomEntity> roomEntities = roomPages.getContent();
@@ -57,30 +54,22 @@ public class RoomController {
     }
 
     @GetMapping("/{id}")
-    public RoomDto getRoomById(@PathVariable("id") int id, @RequestParam(value = "startDate", required = false) String startDate, @RequestParam(value = "endDate", required = false) String endDate) {
-        validateDates(startDate, endDate);
+    public RoomDto getRoomById(
+        @PathVariable("id") int id,
+        @RequestParam(value = "startDate", required = false) String startDate,
+        @RequestParam(value = "endDate", required = false) String endDate
+    ) {
+        roomService.validateDates(startDate, endDate);
 
-        RoomEntity roomEntity = roomService.getRoomById(id, startDate, endDate);
+        RoomEntity roomEntity = roomService.getRoomById(
+            id,
+            startDate == null ? null : Date.valueOf(startDate),
+            endDate == null ? null : Date.valueOf(endDate)
+        );
         if (roomEntity == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room not found or unavailable for the specified dates");
         }
         return roomTransformer.toDto(roomEntity);
-    }
-
-    private void validateDates(String startDate, String endDate) {
-        if (startDate != null && endDate != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            dateFormat.setLenient(false);
-            try {
-                Date start = dateFormat.parse(startDate);
-                Date end = dateFormat.parse(endDate);
-                if (end.before(start)) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "End date must be after start date");
-                }
-            } catch (ParseException e) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dates must be in the format yyyy-MM-dd");
-            }
-        }
     }
 
     // DEMO: just to demonstrate validation and body params

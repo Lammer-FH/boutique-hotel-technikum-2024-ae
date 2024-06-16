@@ -28,6 +28,9 @@ public class BookingDto {
     @JsonProperty("breakfast")
     private boolean breakfast;
 
+    @JsonProperty("rooms")
+    private List<RoomDto> rooms;
+
     @JsonProperty("guests")
     private List<GuestDto> guests;
 }
