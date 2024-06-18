@@ -1,9 +1,9 @@
 package com.example.boutiquehoteltechnikum.services;
 
-import com.example.boutiquehoteltechnikum.objects.BookingRequestObject;
 import com.example.boutiquehoteltechnikum.models.BookingEntity;
 import com.example.boutiquehoteltechnikum.models.GuestEntity;
 import com.example.boutiquehoteltechnikum.models.RoomEntity;
+import com.example.boutiquehoteltechnikum.objects.BookingRequestObject;
 import com.example.boutiquehoteltechnikum.repositories.BookingRepository;
 import com.example.boutiquehoteltechnikum.repositories.GuestRepository;
 import com.example.boutiquehoteltechnikum.utils.DateValidator;
@@ -71,6 +71,6 @@ public class BookingService {
 	}
 
 	private String createBookingNumber() {
-		return "BKG" + Math.random() * 100_000;
+		return "BKG" + (int) (Math.random() * 100_000);
 	}
 }
