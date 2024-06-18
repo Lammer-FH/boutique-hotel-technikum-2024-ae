@@ -31,4 +31,10 @@ export default {
   max-height: 250px;
   object-fit: cover;
 }
+
+@media (min-width: 768px) {
+  .image {
+    max-height: 1000px;
+  }
+}
 </style>
