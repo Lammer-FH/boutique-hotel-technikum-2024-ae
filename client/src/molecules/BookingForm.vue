@@ -23,7 +23,7 @@
         placeholder="max.mustermann@mail.com"
         type="email"
         v-model="bookingStore.mail"
-        errorText="Die Email muss gütlig und darf nicht länger als 50 Zeichen sein!"
+        errorText="Die Email muss gültig und darf nicht länger als 50 Zeichen sein!"
         :disabled="disabled"
       />
       <ToggleComponent
@@ -45,9 +45,9 @@
 </template>
 
 <script>
-import { useRoomStore, useBookingStore } from "@/store";
-import { BookingFormInput, MainButton, ToggleComponent } from "@/atoms";
-import { IonCard, IonCardContent, IonText } from "@ionic/vue";
+import {useBookingStore, useRoomStore} from "@/store";
+import {BookingFormInput, MainButton, ToggleComponent} from "@/atoms";
+import {IonCard, IonCardContent, IonText} from "@ionic/vue";
 
 export default {
   name: "BookingForm",

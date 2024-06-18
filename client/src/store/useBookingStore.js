@@ -1,6 +1,6 @@
-import { defineStore } from "pinia";
+import {defineStore} from "pinia";
 import axios from "axios";
-import { formatDate } from "@/utils/dateUtils";
+import {formatDate} from "@/utils/dateUtils";
 import router from "../router";
 
 // error: process is not defined??
@@ -14,7 +14,7 @@ export const useBookingStore = defineStore("booking", {
     lastname: "",
     mail: "",
     breakfast: true,
-    currentBooking: null,
+    currentBooking: undefined,
   }),
   getters: {},
   actions: {
