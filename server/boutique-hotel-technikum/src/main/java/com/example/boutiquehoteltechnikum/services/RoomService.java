@@ -2,18 +2,15 @@ package com.example.boutiquehoteltechnikum.services;
 
 import com.example.boutiquehoteltechnikum.models.RoomEntity;
 import com.example.boutiquehoteltechnikum.repositories.RoomRepository;
+import com.example.boutiquehoteltechnikum.utils.DateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,8 +25,8 @@ public class RoomService {
             return roomRepository.findAll(pageable);
         }
 
-        Date start = Date.valueOf(startDate);
-        Date end = Date.valueOf(endDate);
+        Date start = DateValidator.getDate(startDate);
+        Date end = DateValidator.getDate(endDate);
         List<RoomEntity> availableRooms = roomRepository.findAvailableRooms(start, end);
 
         int startItem = offset;
@@ -51,21 +48,5 @@ public class RoomService {
             }
         }
         return roomEntity;
-    }
-
-    public void validateDates(String startDate, String endDate) {
-        if (startDate != null && endDate != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            dateFormat.setLenient(false);
-            try {
-                java.util.Date start = dateFormat.parse(startDate);
-                java.util.Date end = dateFormat.parse(endDate);
-                if (end.before(start)) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "End date must be after start date");
-                }
-            } catch (ParseException e) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dates must be in the format yyyy-MM-dd");
-            }
-        }
     }
 }

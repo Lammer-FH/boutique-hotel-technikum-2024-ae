@@ -6,7 +6,6 @@ info:
 servers:
   - url: https://api.example.com/api/v1
 paths:
-
   /rooms:
     get:
       summary: Returns a list of existing hotel rooms or available rooms for a specified date range
@@ -76,7 +75,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-                
+
   /rooms/{id}:
     get:
       summary: Returns details of a specific room.
@@ -110,7 +109,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Room'
+                $ref: "#/components/schemas/Room"
         404:
           description: Room not available with queried parameters
         401:
@@ -118,14 +117,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-                
+                $ref: "#/components/schemas/ErrorResponse"
+
   /images:
     get:
       summary: Returns an image

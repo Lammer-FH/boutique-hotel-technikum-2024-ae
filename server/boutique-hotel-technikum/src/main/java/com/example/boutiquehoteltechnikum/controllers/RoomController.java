@@ -5,6 +5,8 @@ import com.example.boutiquehoteltechnikum.models.RoomEntity;
 import com.example.boutiquehoteltechnikum.objects.RoomResponseObject;
 import com.example.boutiquehoteltechnikum.services.RoomService;
 import com.example.boutiquehoteltechnikum.transformer.RoomTransformer;
+import com.example.boutiquehoteltechnikum.utils.DateValidator;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -37,7 +39,7 @@ public class RoomController {
         if (offset < 0) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Offset (%d) cannot be less than zero", offset));
         }
-        roomService.validateDates(startDate, endDate);
+        DateValidator.validateDates(startDate, endDate);
 
         Page<RoomEntity> roomPages = roomService.getRooms(limit, offset, startDate, endDate);
         List<RoomEntity> roomEntities = roomPages.getContent();
@@ -56,10 +58,10 @@ public class RoomController {
     @GetMapping("/{id}")
     public RoomDto getRoomById(
         @PathVariable("id") int id,
-        @RequestParam(value = "startDate", required = false) String startDate,
-        @RequestParam(value = "endDate", required = false) String endDate
+        @PathParam(value = "startDate") String startDate,
+        @PathParam(value = "endDate") String endDate
     ) {
-        roomService.validateDates(startDate, endDate);
+        DateValidator.validateDates(startDate, endDate);
 
         RoomEntity roomEntity = roomService.getRoomById(
             id,
@@ -71,14 +73,4 @@ public class RoomController {
         }
         return roomTransformer.toDto(roomEntity);
     }
-
-    // DEMO: just to demonstrate validation and body params
-//    @PostMapping("/")
-//    public void saveRoom(@RequestBody @Valid RoomDto roomDto) {
-//        RoomEntity roomEntity = RoomEntity.builder()
-//                .name(roomDto.getName())
-//                .description(roomDto.getDescription())
-//                .build();
-//        roomService.saveRoom(roomEntity);
-//    }
 }

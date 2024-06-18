@@ -1,11 +1,12 @@
 package com.example.boutiquehoteltechnikum.services;
 
-import com.example.boutiquehoteltechnikum.dtos.BookingWriteDto;
+import com.example.boutiquehoteltechnikum.objects.BookingRequestObject;
 import com.example.boutiquehoteltechnikum.models.BookingEntity;
 import com.example.boutiquehoteltechnikum.models.GuestEntity;
 import com.example.boutiquehoteltechnikum.models.RoomEntity;
 import com.example.boutiquehoteltechnikum.repositories.BookingRepository;
 import com.example.boutiquehoteltechnikum.repositories.GuestRepository;
+import com.example.boutiquehoteltechnikum.utils.DateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Service
 public class BookingService {
+
 	@Autowired
 	private BookingRepository bookingRepository;
 	@Autowired
@@ -22,32 +24,31 @@ public class BookingService {
 	@Autowired
 	private RoomService roomService;
 
-	public BookingEntity addBooking(BookingWriteDto bookingWriteDto) {
+	public BookingEntity addBooking(BookingRequestObject bookingRequestObject) {
 		RoomEntity room = roomService.getRoomById(
-			bookingWriteDto.getRoomId(),
-			bookingWriteDto.getStartDate(),
-			bookingWriteDto.getEndDate()
+			bookingRequestObject.getRoomId(),
+			DateValidator.getDate(bookingRequestObject.getStartDate()),
+			DateValidator.getDate(bookingRequestObject.getEndDate())
 		);
 		if (room == null)
 		{
 			throw new ResponseStatusException(
-				HttpStatus.valueOf(401),
-				"{'message': 'room is no longer available'}"
+				HttpStatus.NOT_FOUND, "Das Zimmer ist zu den angegebenen Daten nicht mehr verfügbar!"
 			);
 		}
 
 		GuestEntity guestEntity = guestRepository.save(GuestEntity.builder()
-			.email(bookingWriteDto.getEmail())
-			.firstName(bookingWriteDto.getFirstName())
-			.lastName(bookingWriteDto.getLastName())
+			.email(bookingRequestObject.getGuestDto().getEmail())
+			.firstName(bookingRequestObject.getGuestDto().getFirstName())
+			.lastName(bookingRequestObject.getGuestDto().getLastName())
 			.build());
 
 		BookingEntity bookingEntity = BookingEntity.builder()
-			.startDate(bookingWriteDto.getStartDate())
-			.endDate(bookingWriteDto.getEndDate())
+			.startDate(DateValidator.getDate(bookingRequestObject.getStartDate()))
+			.endDate(DateValidator.getDate(bookingRequestObject.getEndDate()))
 			.rooms(List.of(room))
 			.guests(List.of(guestEntity))
-			.breakfast(bookingWriteDto.isBreakfast())
+			.breakfast(bookingRequestObject.isBreakfast())
 			.bookingNumber(generateUniqueBookingNumber())
 			.build();
 
@@ -66,7 +67,7 @@ public class BookingService {
 				return bookingNumber;
 			}
 		}
-		throw new RuntimeException("No unique BookingNumber found");
+		throw new RuntimeException("No unique BookingNumber found!");
 	}
 
 	private String createBookingNumber() {

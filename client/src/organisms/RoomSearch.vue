@@ -1,21 +1,36 @@
 <template>
-  <div>
-    <div class="inline pb-10">
-      <DatePicker v-model="startDate" pickerId="start-date-picker" />
+  <div class="p-10">
+    <div class="inline">
+      <FilterButton identifier="filter" />
+      <DatePicker
+        v-model="roomStore.startDate"
+        pickerId="start-date-picker"
+        :disabled="!roomStore.isFiltering"
+      />
       <div class="centered">bis</div>
-      <DatePicker v-model="endDate" pickerId="end-date-picker" />
+      <DatePicker
+        v-model="roomStore.endDate"
+        pickerId="end-date-picker"
+        :disabled="!roomStore.isFiltering"
+      />
+      <MainButton
+        identifier="search"
+        @search="search"
+        text="Suchen"
+        :disabled="!roomStore.isFiltering || roomStore.loading"
+        icon="mdi:magnify"
+      />
     </div>
-    <MainButton identifier="search" @search="search" />
     <FeedbackMessage
       :isOpen="isAlertOpen"
-      message="End date cannot be before start date"
+      message="Startdatum kann nicht nach Enddatum liegen!"
       @close-alert="isAlertOpen = false"
     />
   </div>
 </template>
 
 <script>
-import { MainButton } from "@/atoms";
+import { MainButton, FilterButton } from "@/atoms";
 import { DatePicker } from "@/molecules";
 import { useRoomStore } from "@/store";
 import FeedbackMessage from "@/atoms/FeedbackMessage.vue";
@@ -25,27 +40,22 @@ export default {
   components: {
     DatePicker,
     MainButton,
+    FilterButton,
     FeedbackMessage,
   },
   data() {
     return {
-      startDate: new Date().toISOString(),
-      endDate: new Date().toISOString(),
       isAlertOpen: false,
       roomStore: useRoomStore(),
     };
   },
   methods: {
     search() {
-      if (this.startDate && this.endDate) {
-        if (new Date(this.endDate) < new Date(this.startDate)) {
-          this.isAlertOpen = true;
-        } else {
-          this.roomStore.fetchRooms(this.startDate, this.endDate);
-        }
-      } else {
-        this.roomStore.fetchRooms();
+      if (this.roomStore.startDate > this.roomStore.endDate) {
+        this.isAlertOpen = true;
+        return;
       }
+      this.roomStore.fetchRooms(true);
     },
   },
 };
@@ -56,12 +66,13 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  align-items: center;
 }
 .pt-10 {
   padding-top: 10px;
 }
-.pb-10 {
-  padding-bottom: 10px;
+.p-10 {
+  padding: 10px;
 }
 .centered {
   align-self: center;

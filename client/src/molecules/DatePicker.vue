@@ -1,8 +1,16 @@
 <template>
   <div>
-    <ion-datetime-button :datetime="pickerId" @click="isOpen = true"></ion-datetime-button>
+    <ion-datetime-button
+      :datetime="pickerId"
+      @click="isOpen = true"
+      :disabled="disabled"
+    ></ion-datetime-button>
 
-    <ion-modal :keep-contents-mounted="true" :is-open="isOpen" @didDismiss="onDidDismiss">
+    <ion-modal
+      :keep-contents-mounted="true"
+      :is-open="isOpen"
+      @didDismiss="onDidDismiss"
+    >
       <ion-datetime
         :id="pickerId"
         presentation="date"
@@ -10,6 +18,7 @@
         :max="max"
         v-model="selectedDate"
         @ionChange="handleDateChange"
+        :format-options="formatOptions"
       ></ion-datetime>
     </ion-modal>
   </div>
@@ -17,6 +26,7 @@
 
 <script>
 import { IonDatetimeButton, IonDatetime, IonModal } from "@ionic/vue";
+import { useRoomStore } from "@/store";
 
 export default {
   name: "DatePicker",
@@ -34,11 +44,23 @@ export default {
       type: String,
       required: true,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
+      roomStore: useRoomStore(),
       selectedDate: this.modelValue,
       isOpen: false,
+      formatOptions: {
+        date: {
+          month: "2-digit",
+          day: "2-digit",
+          year: "2-digit",
+        },
+      },
     };
   },
   watch: {

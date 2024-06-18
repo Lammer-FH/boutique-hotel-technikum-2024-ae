@@ -2,16 +2,21 @@ package com.example.boutiquehoteltechnikum.transformer;
 
 import com.example.boutiquehoteltechnikum.dtos.*;
 import com.example.boutiquehoteltechnikum.models.*;
+import com.example.boutiquehoteltechnikum.objects.BookingResponseObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
 @Service
-public class BookingTransformer implements ITransformer<BookingEntity, BookingDto> {
+public class BookingTransformer implements ITransformer<BookingEntity, BookingResponseObject> {
+
+    @Autowired
+    private RoomTransformer roomTransformer;
 
     @Override
-    public BookingDto toDto(BookingEntity bookingEntity) {
-        return BookingDto.builder()
+    public BookingResponseObject toDto(BookingEntity bookingEntity) {
+        return BookingResponseObject.builder()
             .bookingId(bookingEntity.getBookingId())
             .bookingNumber(bookingEntity.getBookingNumber())
             .startDate(bookingEntity.getStartDate())
@@ -21,7 +26,7 @@ public class BookingTransformer implements ITransformer<BookingEntity, BookingDt
                 .map(this::toDto)
                 .collect(Collectors.toList()))
             .rooms(bookingEntity.getRooms().stream()
-                .map(this::toDto)
+                .map(roomTransformer::toDto)
                 .toList())
             .build();
     }
@@ -32,32 +37,6 @@ public class BookingTransformer implements ITransformer<BookingEntity, BookingDt
             .firstName(guestEntity.getFirstName())
             .lastName(guestEntity.getLastName())
             .email(guestEntity.getEmail())
-            .build();
-    }
-
-    private RoomDto toDto(RoomEntity roomEntity) {
-        return RoomDto.builder()
-            .roomId(roomEntity.getRoomId())
-            .name(roomEntity.getName())
-            .description(roomEntity.getDescription())
-            .characteristics(roomEntity.getCharacteristics() == null ? null : roomEntity.getCharacteristics().stream().map(this::toDto).toList())
-            .images(roomEntity.getImages() == null ? null : roomEntity.getImages().stream().map(this::toDto).toList())
-            .build();
-    }
-
-    private RoomImageDto toDto(RoomImageEntity roomImageEntity) {
-        return RoomImageDto.builder()
-            .roomImageId(roomImageEntity.getRoomImageId())
-            .filename(roomImageEntity.getFilename())
-            .isAnchor(roomImageEntity.isAnchor())
-            .build();
-    }
-
-    private CharacteristicDto toDto(CharacteristicEntity characteristicEntity) {
-        return CharacteristicDto.builder()
-            .name(characteristicEntity.getName())
-            .characteristicId(characteristicEntity.getCharacteristicId())
-            .icon(characteristicEntity.getIcon())
             .build();
     }
 }
