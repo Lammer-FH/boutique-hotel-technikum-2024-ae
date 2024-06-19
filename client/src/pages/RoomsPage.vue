@@ -1,8 +1,12 @@
 <template>
   <ion-page>
+    <ion-header>
+      <ion-toolbar>
+        <RoomSearch />
+      </ion-toolbar>
+    </ion-header>
     <ion-content>
       <div class="container pt-10 page">
-        <RoomSearch />
         <RoomList />
       </div>
     </ion-content>
@@ -10,13 +14,15 @@
 </template>
 
 <script>
-import { IonPage, IonContent } from "@ionic/vue";
+import { IonPage, IonContent, IonHeader, IonToolbar } from "@ionic/vue";
 import { RoomSearch, RoomList } from "@/organisms";
 
 export default {
   name: "RoomsPage",
   components: {
     IonPage,
+    IonHeader,
+    IonToolbar,
     IonContent,
     RoomSearch,
     RoomList,
@@ -29,8 +35,8 @@ export default {
   padding-top: 10px;
 }
 .page {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 </style>

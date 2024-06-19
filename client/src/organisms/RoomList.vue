@@ -1,17 +1,14 @@
 <template>
-  <div class="pt-10 resultContainer">
+  <div class="resultContainer">
+    <RefresherComponent @refresh="loadItemsFromBeginning" />
     <ion-list v-if="hasRooms" role="feed">
       <ion-item v-for="room in roomStore.rooms" :key="room" role="article">
         <RoomCard :room="room" />
       </ion-item>
     </ion-list>
     <div v-if="!hasRooms" class="noResultsLabel">
-      <ion-icon
-        :icon="closeCircleOutline"
-        size="large"
-        class="error"
-      ></ion-icon>
-      <ion-label class="error">Keine Ergebnisse gefunden</ion-label>
+      <ion-icon :icon="closeCircleOutline" size="large"></ion-icon>
+      <ion-label>Keine Ergebnisse gefunden</ion-label>
     </div>
     <ion-infinite-scroll @ionInfinite="onInfinite($event)">
       <ion-infinite-scroll-content loading-spinner="circular">
@@ -32,6 +29,7 @@ import {
 import { RoomCard } from "@/molecules";
 import { useRoomStore } from "@/store";
 import { closeCircleOutline } from "ionicons/icons";
+import { RefresherComponent } from "@/atoms";
 
 export default {
   name: "RoomList",
@@ -49,6 +47,7 @@ export default {
     RoomCard,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
+    RefresherComponent,
   },
   computed: {
     hasRooms() {
@@ -66,15 +65,14 @@ export default {
     loadItems() {
       this.roomStore.fetchRooms();
     },
+    loadItemsFromBeginning() {
+      this.roomStore.fetchRooms(true);
+    },
   },
 };
 </script>
 
 <style scoped>
-.pt-10 {
-  padding-top: 10px;
-}
-
 .resultContainer {
   display: flex;
   flex-direction: column;
@@ -87,8 +85,5 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.error {
-  color: lightcoral;
 }
 </style>

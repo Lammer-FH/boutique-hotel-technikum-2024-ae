@@ -1,19 +1,22 @@
 package com.example.boutiquehoteltechnikum.transformer;
 
-import com.example.boutiquehoteltechnikum.dtos.BookingDto;
-import com.example.boutiquehoteltechnikum.dtos.GuestDto;
-import com.example.boutiquehoteltechnikum.models.BookingEntity;
-import com.example.boutiquehoteltechnikum.models.GuestEntity;
+import com.example.boutiquehoteltechnikum.dtos.*;
+import com.example.boutiquehoteltechnikum.models.*;
+import com.example.boutiquehoteltechnikum.objects.BookingResponseObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
 @Service
-public class BookingTransformer implements ITransformer<BookingEntity, BookingDto> {
+public class BookingTransformer implements ITransformer<BookingEntity, BookingResponseObject> {
+
+    @Autowired
+    private RoomTransformer roomTransformer;
 
     @Override
-    public BookingDto toDto(BookingEntity bookingEntity) {
-        return BookingDto.builder()
+    public BookingResponseObject toDto(BookingEntity bookingEntity) {
+        return BookingResponseObject.builder()
             .bookingId(bookingEntity.getBookingId())
             .bookingNumber(bookingEntity.getBookingNumber())
             .startDate(bookingEntity.getStartDate())
@@ -22,6 +25,9 @@ public class BookingTransformer implements ITransformer<BookingEntity, BookingDt
             .guests(bookingEntity.getGuests().stream()
                 .map(this::toDto)
                 .collect(Collectors.toList()))
+            .rooms(bookingEntity.getRooms().stream()
+                .map(roomTransformer::toDto)
+                .toList())
             .build();
     }
 

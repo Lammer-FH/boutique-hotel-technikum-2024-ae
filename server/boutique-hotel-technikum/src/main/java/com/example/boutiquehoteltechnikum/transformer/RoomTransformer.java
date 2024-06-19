@@ -8,35 +8,34 @@ import com.example.boutiquehoteltechnikum.models.RoomEntity;
 import com.example.boutiquehoteltechnikum.models.RoomImageEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RoomTransformer implements ITransformer<RoomEntity, RoomDto> {
 
     public RoomDto toDto(RoomEntity roomEntity) {
-        List<CharacteristicDto> characteristicDtos = new ArrayList<>();
-        for (CharacteristicEntity characteristicEntity : roomEntity.getCharacteristics()) {
-            characteristicDtos.add(CharacteristicDto.builder()
-                    .characteristicId(characteristicEntity.getCharacteristicId())
-                    .name(characteristicEntity.getName())
-                    .icon(characteristicEntity.getIcon())
-                    .build());
-        }
-        List<RoomImageDto> roomImageDtos = new ArrayList<>();
-        for (RoomImageEntity roomImageEntity : roomEntity.getImages()) {
-            roomImageDtos.add(RoomImageDto.builder()
-                    .roomImageId(roomImageEntity.getRoomImageId())
-                    .filename(roomImageEntity.getFilename())
-                    .isAnchor(roomImageEntity.isAnchor())
-                    .build());
-        }
         return  RoomDto.builder()
             .roomId(roomEntity.getRoomId())
-            .characteristics(characteristicDtos)
-            .images(roomImageDtos)
+            .characteristics(roomEntity.getCharacteristics().stream().map(this::toDto).collect(Collectors.toList()))
+            .images(roomEntity.getImages().stream().map(this::toDto).collect(Collectors.toList()))
             .name(roomEntity.getName())
             .description(roomEntity.getDescription())
             .build();
+    }
+
+    private RoomImageDto toDto(RoomImageEntity roomImageEntity) {
+        return RoomImageDto.builder()
+                .roomImageId(roomImageEntity.getRoomImageId())
+                .filename(roomImageEntity.getFilename())
+                .isAnchor(roomImageEntity.isAnchor())
+                .build();
+    }
+
+    private CharacteristicDto toDto(CharacteristicEntity characteristicEntity) {
+        return CharacteristicDto.builder()
+                .name(characteristicEntity.getName())
+                .characteristicId(characteristicEntity.getCharacteristicId())
+                .icon(characteristicEntity.getIcon())
+                .build();
     }
 }

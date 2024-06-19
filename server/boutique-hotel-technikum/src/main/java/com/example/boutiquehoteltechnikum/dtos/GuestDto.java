@@ -2,6 +2,7 @@ package com.example.boutiquehoteltechnikum.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Value;
@@ -24,6 +25,7 @@ public class GuestDto {
     private String lastName;
 
     @JsonProperty("email")
+    @Email(message = "Die Email muss gültig sein!")
     @Size(max = 50, message = "Die Email darf nicht länger als 50 Zeichen sein!")
     private String email;
 }

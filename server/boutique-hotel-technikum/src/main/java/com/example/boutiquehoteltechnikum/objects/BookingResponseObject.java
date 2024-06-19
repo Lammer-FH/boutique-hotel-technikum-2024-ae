@@ -1,5 +1,7 @@
-package com.example.boutiquehoteltechnikum.dtos;
+package com.example.boutiquehoteltechnikum.objects;
 
+import com.example.boutiquehoteltechnikum.dtos.GuestDto;
+import com.example.boutiquehoteltechnikum.dtos.RoomDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Value;
@@ -11,7 +13,7 @@ import java.util.List;
 @Value
 @Builder
 @Jacksonized
-public class BookingDto {
+public class BookingResponseObject {
 
     @JsonProperty("bookingId")
     private int bookingId;
@@ -27,6 +29,9 @@ public class BookingDto {
 
     @JsonProperty("breakfast")
     private boolean breakfast;
+
+    @JsonProperty("rooms")
+    private List<RoomDto> rooms;
 
     @JsonProperty("guests")
     private List<GuestDto> guests;

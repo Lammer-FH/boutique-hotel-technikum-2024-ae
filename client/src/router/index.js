@@ -7,6 +7,7 @@ import {
   TermsAndConditionsPage,
   RoomsPage,
   RoomDetailsPage,
+  BookingConfirmationPage,
 } from "@/pages";
 
 const routes = [
@@ -44,6 +45,11 @@ const routes = [
     path: "/roomDetails",
     name: "Details",
     component: RoomDetailsPage,
+  },
+  {
+    path: "/bookingConfirmation",
+    name: "Buchungsbestätigung",
+    component: BookingConfirmationPage,
   },
 ];
 

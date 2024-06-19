@@ -2,6 +2,7 @@ package com.example.boutiquehoteltechnikum.services;
 
 import com.example.boutiquehoteltechnikum.models.RoomEntity;
 import com.example.boutiquehoteltechnikum.repositories.RoomRepository;
+import com.example.boutiquehoteltechnikum.utils.DateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -9,7 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,8 +25,8 @@ public class RoomService {
             return roomRepository.findAll(pageable);
         }
 
-        Date start = Date.valueOf(startDate);
-        Date end = Date.valueOf(endDate);
+        Date start = DateValidator.getDate(startDate);
+        Date end = DateValidator.getDate(endDate);
         List<RoomEntity> availableRooms = roomRepository.findAvailableRooms(start, end);
 
         int startItem = offset;
@@ -35,14 +36,12 @@ public class RoomService {
         return new PageImpl<>(pagedRooms, pageable, availableRooms.size());
     }
 
-    public RoomEntity getRoomById(int id, String startDate, String endDate) {
+    public RoomEntity getRoomById(int id, Date start, Date end) {
         RoomEntity roomEntity = roomRepository.findById(id).orElse(null);
         if (roomEntity == null) {
             return null;
         }
-        if (startDate != null && endDate != null) {
-            Date start = Date.valueOf(startDate);
-            Date end = Date.valueOf(endDate);
+        if (start != null && end != null) {
             List<RoomEntity> availableRooms = roomRepository.findAvailableRooms(start, end);
             if (!availableRooms.contains(roomEntity)) {
                 return null;
